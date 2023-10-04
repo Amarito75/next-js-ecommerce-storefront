@@ -4,9 +4,11 @@ import Gallery from "@/components/gallery";
 import Info from "@/components/info";
 import ProductList from "@/components/product-list";
 import Container from "@/components/ui/container";
+import { Product } from "@/types";
 import React from "react";
 
 interface ProductPageProps {
+  data: Product;
   params: {
     productId: string;
   };
