@@ -12,10 +12,10 @@ interface InfoProps {
 
 const Info: React.FC<InfoProps> = ({ data }) => {
   return (
-    <div>
+    <div className="">
       <h1 className="text-3xl font-bold text-gray-900">{data.name}</h1>
       <div className="mt-3 flex items-end justify-between">
-        <p className="text-2xl text-gray-900">
+        <p className="text-3xl text-gray-900">
           <Currency value={data.price} />
         </p>
       </div>
@@ -25,9 +25,9 @@ const Info: React.FC<InfoProps> = ({ data }) => {
         <div>{data?.media?.name}</div>
       </div>
       <div className="mt-10 flex items-center gap-x-3">
-        <Button className="flex items-center gap-x-2">
+        <Button className="flex items-center gap-x-2 uppercase">
           Add To Cart
-          <LuShoppingCart />
+          <LuShoppingCart className="w-7 h-7" />
         </Button>
       </div>
     </div>

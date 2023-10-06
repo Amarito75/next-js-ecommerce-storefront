@@ -8,8 +8,6 @@ interface PreviewModalStore {
   onClose: () => void;
 }
 
-import React from "react";
-
 const usePreviewModal = create<PreviewModalStore>((set) => ({
   isOpen: false,
   data: undefined,

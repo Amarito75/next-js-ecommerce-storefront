@@ -8,6 +8,7 @@ import Currency from "./currency";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/use-preview-modal";
+import useCart from "@/hooks/use-cart";
 
 interface ProductCard {
   data: Product;
@@ -16,6 +17,7 @@ interface ProductCard {
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
   const previewModal = usePreviewModal();
   const router = useRouter();
+  const cart = useCart();
 
   const handleClick = () => {
     router.push(`/product/${data?.id}`);
@@ -27,18 +29,24 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
     previewModal.onOpen(data);
   };
 
+  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+
+    cart.addItem(data);
+  };
+
   return (
     <div
       onClick={handleClick}
-      className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4"
+      className="bg-white group cursor-pointer border border-black bg-beige p-3 space-y-4"
     >
       {/* Images and actions */}
-      <div className="aspect-square rounded-xl bg-gray-100 relative">
+      <div className="aspect-square bg-gray-100 relative">
         <Image
           src={data?.image?.[0]?.url}
           alt={"Image"}
           fill
-          className="aspect-square object-cover rounded-md"
+          className="aspect-square object-cover border border-black"
         />
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
           <div className="flex gap-x-6 justify-center">
@@ -47,7 +55,7 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
               icon={<LuExpand size={20} className="text-gray-600" />}
             />
             <IconButton
-              onClick={() => {}}
+              onClick={onAddToCart}
               icon={<LuShoppingCart size={20} className="text-gray-600" />}
             />
           </div>
@@ -55,12 +63,11 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
       </div>
       {/* Description */}
       <div>
-        <p className="font-semibold text-lg">{data.name}</p>
-        <p className="text-sm text-gray-500">{data.category?.name}</p>
-      </div>
-      {/* Price */}
-      <div className="flex items-center justify-between">
-        <Currency value={data?.price} />
+        <p className="uppercase text-lg">{data.name}</p>
+        {/* Price */}
+        <div className="flex items-center justify-between">
+          <Currency value={data?.price} />
+        </div>
       </div>
     </div>
   );
