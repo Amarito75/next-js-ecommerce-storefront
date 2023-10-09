@@ -8,7 +8,6 @@ import { Product } from "@/types";
 import React from "react";
 
 interface ProductPageProps {
-  data: Product;
   params: {
     productId: string;
   };
@@ -19,6 +18,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const suggestedProducts = await getProducts({
     categoryId: product?.category?.id,
   });
+
+  if (!product) {
+    return null;
+  }
   return (
     <div className="bg-beige">
       <Container>
